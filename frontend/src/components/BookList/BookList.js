@@ -5,12 +5,18 @@ import {
   deleteBook,
   toggleFavoriteBook,
 } from '../../redux/books/actionCreators';
+import { selectFilterTitle } from '../../redux/slices/filterSlice';
 
 const BookList = () => {
   const books = useSelector((state) => state.books);
+  const titleFilter = useSelector(selectFilterTitle);
+  const filteredBooks = books.filter((book) =>
+    book.title.toLowerCase().includes(titleFilter.toLowerCase())
+  );
   const dispatch = useDispatch();
   const handleDeleteBook = (id) => dispatch(deleteBook(id));
   const handleToggleFavorite = (id) => dispatch(toggleFavoriteBook(id));
+
   return (
     <div className="app-block book-list">
       <h2>Book List</h2>
@@ -18,7 +24,7 @@ const BookList = () => {
         <p>No books availabl</p>
       ) : (
         <ul>
-          {books.map((book, i) => {
+          {filteredBooks.map((book, i) => {
             return (
               <li key={book.id}>
                 <div className="book-info">
