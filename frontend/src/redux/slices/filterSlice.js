@@ -17,11 +17,11 @@ const filterSlice = createSlice({
     },
     setOnlyFavoriteFilter: (state, action) => {
       // you can mutate state thanks to Immer library
-      state.title = action.payload;
+      state.onlyFavorite = !state.onlyFavorite;
       //  you can also return new state as usally
       // return { ...state, onlyFavorite: action.payload };
     },
-    resetFilters: (state) => {
+    resetFilters: () => {
       return initialState;
     },
   },
@@ -34,4 +34,6 @@ export const {
   resetFilters,
 } = filterSlice.actions;
 export const selectFilterTitle = (state) => state.filter.title;
+export const selectFilterAuthor = (state) => state.filter.author;
+export const selectFilterOnlyFavorite = (state) => state.filter.onlyFavorite;
 export default filterSlice.reducer;
