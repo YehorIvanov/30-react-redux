@@ -15,7 +15,7 @@ const filterSlice = createSlice({
     setAuthorFilter: (state, action) => {
       return { ...state, author: action.payload };
     },
-    setOnlyFavoriteFilter: (state, action) => {
+    setOnlyFavoriteFilter: (state) => {
       // you can mutate state thanks to Immer library
       state.onlyFavorite = !state.onlyFavorite;
       //  you can also return new state as usally
