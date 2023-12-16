@@ -1,7 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
-function createBookWithId(book) {
+function createBookWithId(book, source) {
   return {
     ...book,
+    source,
     id: uuidv4(),
     isFavorite: false,
   };
