@@ -1,10 +1,10 @@
 import './BookForm.css';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { chunkFunction } from '../../redux/slices/booksSlice';
+
 import booksData from '../../data/books.json';
 import createBookWithId from '../../utils/createBookWithId';
-import { addBook } from '../../redux/slices/booksSlice';
+import { addBook, fetchBook } from '../../redux/slices/booksSlice';
 
 const BookForm = () => {
   const [title, setTille] = useState('');
@@ -25,9 +25,9 @@ const BookForm = () => {
       booksData[Math.floor(Math.random() * (booksData.length + 1))];
     dispatch(addBook(createBookWithId(getRendomBook(booksData), 'Random')));
   };
-  
+
   const handleAddRandomBookViaAPI = () => {
-    dispatch(chunkFunction);
+    dispatch(fetchBook());
   };
 
   return (
