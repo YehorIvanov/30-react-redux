@@ -14,7 +14,6 @@ const BookList = () => {
   const titleFilter = useSelector(selectFilterTitle);
   const authorFilter = useSelector(selectFilterAuthor);
   const onlyFavoriteFilter = useSelector(selectFilterOnlyFavorite);
-
   const filteredBooks = books.filter(
     (book) =>
       book.title.toLowerCase().includes(titleFilter.toLowerCase()) &&
@@ -28,7 +27,6 @@ const BookList = () => {
   const highlightMatch = (text, filter) => {
     if (!filter) return text;
     const regex = new RegExp(`(${filter})`, 'gi');
-    console.log(text.split(regex));
     return text.split(regex).map((substring, i) => {
       if (substring.toLowerCase() === filter.toLowerCase()) {
         return (

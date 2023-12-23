@@ -1,18 +1,21 @@
 import './BookForm.css';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { FaSpinner } from 'react-icons/fa';
-
 import booksData from '../../data/books.json';
 import createBookWithId from '../../utils/createBookWithId';
-import { addBook, fetchBook } from '../../redux/slices/booksSlice';
+import {
+  addBook,
+  fetchBook,
+  selectIsLoadingViaAPI,
+} from '../../redux/slices/booksSlice';
 import { setError } from '../../redux/slices/errorSlice';
 
 const BookForm = () => {
-  const [isLoading, setIsLoading] = useState(false);
   const [title, setTille] = useState('');
   const [author, setAuthor] = useState('');
   const dispatch = useDispatch();
+  const isLoadingViaAPI = useSelector(selectIsLoadingViaAPI);
 
   const handleSubmite = (event) => {
     event.preventDefault();
@@ -24,6 +27,7 @@ const BookForm = () => {
       dispatch(setError('You must fill Title and Author'));
     }
   };
+
   const handleAddRandomBook = (event) => {
     event.preventDefault();
     const getRendomBook = (booksData) =>
@@ -31,14 +35,9 @@ const BookForm = () => {
     dispatch(addBook(createBookWithId(getRendomBook(booksData), 'Random')));
   };
 
-  const handleAddRandomBookViaAPI = async () => {
-    try {
-      setIsLoading(true);
-      // dispatch(fetchBook('http://localhost:4000/random-book'));
-      await dispatch(fetchBook('http://localhost:4000/random-book-delayed'));
-    } finally {
-      setIsLoading(false);
-    }
+  const handleAddRandomBookViaAPI = () => {
+    // dispatch(fetchBook('http://localhost:4000/random-book'));
+    dispatch(fetchBook('http://localhost:4000/random-book-delayed'));
   };
 
   return (
@@ -68,11 +67,11 @@ const BookForm = () => {
           Add Random
         </button>
         <button
-          disabled={isLoading}
+          disabled={isLoadingViaAPI}
           type="button"
           onClick={handleAddRandomBookViaAPI}
         >
-          {isLoading ? (
+          {isLoadingViaAPI ? (
             <>
               <span>Loading Book...</span>
               <FaSpinner className="spinner" />
